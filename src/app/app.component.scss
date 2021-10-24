@@ -1,0 +1,32 @@
+.container {
+  height: 100vh;
+  background-color: var(--very-light-gray);
+}
+.dark-theme-container {
+  background-color: var(--very-dark-blue-bg);
+}
+
+.header {
+  background-color: var(--white);
+  box-shadow: 0px 4px 8px -6px rgba(0, 0, 0, 0.42);
+  margin-bottom: 4px;
+  min-width: 400px;
+}
+
+.dark-theme-header {
+  background-color: var(--dark-blue);
+  color: var(--very-light-gray);
+  box-shadow: 0 60px 10px 15px rgba(43, 57, 69, 1);
+}
+
+.main,
+.footer {
+  min-width: 400px;
+  background-color: var(--very-light-gray);
+}
+
+.dark-theme-main,
+.dark-theme-footer {
+  background-color: var(--very-dark-blue-bg);
+  color: var(--very-light-gray);
+}

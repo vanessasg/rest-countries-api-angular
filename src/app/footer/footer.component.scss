@@ -1,0 +1,23 @@
+.container {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.2em;
+  padding-bottom: 30px;
+
+  a {
+    text-decoration: none;
+    color: var(--very-dark-blue-txt);
+    font-weight: 600;
+    transition: font-size 0.5s ease;
+
+    &:hover {
+      font-size: 1.25em;
+    }
+  }
+}
+.dark-theme-footer {
+  a {
+    color: var(--very-light-gray);
+  }
+}

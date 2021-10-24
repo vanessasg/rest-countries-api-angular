@@ -1,0 +1,51 @@
+.container {
+  width: 95%;
+  height: 45px;
+  max-width: 1280px;
+  min-width: 360px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo{
+    font-size: 1.7em;
+    font-weight: 800;
+  }
+
+  .theme {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    mat-icon{
+      transform: scale(0.8);
+      padding-right: 5px;
+    }
+    p {
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 615px) {
+  .logo {
+    font-size: 1em !important;
+  }
+
+  .theme {
+    mat-icon{
+      transform: scale(0.7) !important;
+    }
+    p{
+      font-size: 0.9em !important;
+    }
+  }
+}

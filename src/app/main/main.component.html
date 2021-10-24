@@ -1,0 +1,33 @@
+<div class="container"  *ngIf='showInfo === false'>
+  <form class="search-bar">
+    <div class="input" [ngClass]='darkTheme===false?"" : "dark-theme-input" '>
+      <mat-icon>search</mat-icon>
+      <input type="text" class="form-control" placeholder="Search for a country..." [(ngModel)]='inputValue' name=ngModel
+        (ngModelChange)='filterCountries()'>
+    </div>
+
+    <div class="select" [ngClass]='darkTheme===false?"" : "dark-theme-select" '>
+      <select name="regions" id="region-select" (change)='selectRegion($event)'>
+        <option value="">Filter by Region</option>
+        <option *ngFor='let region of regions ' [value]="region" >{{region}}</option>
+      </select>
+    </div>
+  </form>
+
+  <div class="cards-list">
+    <div *ngFor='let country of filteredCountries | slice:0:40 '>
+      <div (click)=' showInfo=true; sendCountry(country.name); sendShowInfo()' class="card" [ngClass]='darkTheme===false ? "" : "dark-theme-card"' >
+        <div class="image">
+          <img src="{{country.flag}}" alt="">
+        </div>
+
+        <div class="details">
+          <p>{{country.name }}</p>
+          <p>Population: <span>{{country.population | number: '2.'}}</span></p>
+          <p>Region: <span>{{country.region}}</span></p>
+          <p *ngIf='country.capital !== "" '>Capital: <span>{{country.capital}}</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<div class="container" [ngClass]='darkMode === false ?"" : "dark-mode" '>
+  <div class="logo">Where in the world?</div>
+  <div class="theme" (click)='darkMode=!darkMode; sendTheme()'>
+    <mat-icon>dark_mode</mat-icon>
+    <p>Dark Mode</p>
+  </div>
+</div>

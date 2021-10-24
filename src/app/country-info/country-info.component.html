@@ -1,0 +1,58 @@
+<div class="container" *ngIf='showInfo'>
+  <div class="back" [ngClass]='darkTheme===true?"dark-theme-back" : "" '>
+    <a href="/main" >
+      <button ><mat-icon>keyboard_backspace</mat-icon> Back</button>
+    </a>
+  </div>
+
+  <div class="info">
+    <div *ngFor='let item of country |keyvalue : returnZero'>
+      <div class="image" *ngIf="item.key === 'flag'">
+        <img src="{{item.value}}" alt="">
+      </div>
+    </div>
+    <div class="details">
+      <div class="name" *ngFor='let item of country |keyvalue : returnZero' [ngClass]='darkTheme===false?"" : "dark-theme-title" '>
+        <h1 *ngIf="item.key === 'name'">{{item.value}}</h1>
+      </div>
+      <div class="info-section">
+        <div class="info1">
+          <div class="native-name" *ngFor='let item of country |keyvalue : returnZero'>
+            <div *ngIf="item.key=== 'nativeName' ">Native Name: <span>{{item.value}}</span></div>
+          </div>
+          <div class="population" *ngFor='let item of country |keyvalue : returnZero'>
+            <div *ngIf="item.key=== 'population' ">Population: <span>{{ item.value |json|number:'.2' }}</span></div>
+          </div>
+          <div class="region" *ngFor='let item of country |keyvalue : returnZero'>
+            <div *ngIf="item.key=== 'region' ">Region: <span>{{item.value}}</span></div>
+          </div>
+
+          <div class="sub-region" *ngFor='let item of country |keyvalue : returnZero'>
+            <div *ngIf="item.key=== 'subregion' ">Sub Region: <span>{{item.value}}</span></div>
+          </div>
+          <div class="capital" *ngFor='let item of country |keyvalue : returnZero'>
+            <div *ngIf="item.key=== 'capital' ">Capital: <span>{{item.value}}</span></div>
+          </div>
+
+        </div>
+        <div class="info2">
+          <div class="domain" *ngFor='let item of country |keyvalue : returnZero'>
+            <div *ngIf="item.key=== 'topLevelDomain' ">Top Level Domain: <span>{{item.value}}</span></div>
+          </div>
+          <div class="currencies" *ngFor='let item of country |keyvalue : returnZero'>
+            <div *ngIf='item.key === "currencies"'>Currencies: <span>{{currencies}}</span></div>
+          </div>
+          <div class="lang" *ngFor='let item of country |keyvalue : returnZero'>
+            <div *ngIf="item.key=== 'languages' ">Languages: <span>{{languages}}</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="border-countries" *ngIf='found.length'>
+        <span> Borders Countries:</span>
+        <div class="borders" *ngFor='let border of found | slice:0:3' [ngClass]='darkTheme===false?"" : "dark-theme-border" '>
+          <button>{{border}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
