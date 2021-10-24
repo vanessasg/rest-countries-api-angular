@@ -1,6 +1,7 @@
 .container {
   height: 100vh;
   background-color: var(--very-light-gray);
+
 }
 .dark-theme-container {
   background-color: var(--very-dark-blue-bg);
@@ -11,6 +12,7 @@
   box-shadow: 0px 4px 8px -6px rgba(0, 0, 0, 0.42);
   margin-bottom: 4px;
   min-width: 400px;
+  overflow: hidden;
 }
 
 .dark-theme-header {
