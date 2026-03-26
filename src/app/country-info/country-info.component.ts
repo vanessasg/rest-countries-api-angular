@@ -1,75 +1,65 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { Country } from '../country';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CountryService } from '../country.service';
+import { Country } from '../country';
 
 @Component({
   selector: 'app-country-info',
   templateUrl: './country-info.component.html',
   styleUrls: ['./country-info.component.scss'],
 })
-export class CountryInfoComponent implements OnInit, OnChanges {
-  @Input('clickedCountry') clickedCountry: any;
-  @Input('showInfo') showInfo: any;
-  @Input('darkTheme') darkTheme: boolean = false;
-  country: any;
-  currencies: any;
-  languages: [string] = [''];
-  borders: [string] = [''];
+export class CountryInfoComponent implements OnInit {
+  country!: Country;
+  currencies: string = '';
+  languages: string[] = [];
+  borders: string[] = [];
+  found: string[] = [];
   allCountries!: Country[];
-  found: [string] = [''];
+  darkTheme: boolean = false;
+  nativeName: string = '';
 
-  constructor(private service: CountryService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private service: CountryService,
+  ) {}
 
   ngOnInit(): void {
-    this.languages.shift();
-    this.borders.shift();
-    this.found.shift();
-    this.getAllCountries();
+    const code = this.route.snapshot.paramMap.get('code');
+    if (!code) return;
 
-  }
-  ngOnChanges() {
-    if (this.clickedCountry) {
-      this.country = this.clickedCountry[0];
-      //console.log(this.country);
-      this.currencies = this.country['currencies'][0].name;
-      this.country['languages'].forEach((ele: any) => {
-        this.languages.push(ele.name);
-      });
-
-      if (this.country['borders']) {
-        this.borders = this.country['borders'];
-
-        this.country['borders'].forEach((ele: any) => {
-          if (this.borders.length <= 2) {
-            this.borders.push(ele);
-          }
-        });
-      }
-    }
-
-    if(this.allCountries){
-      this.foundBorders()
-    }
-  }
-
-  /* keyvalue:0 TypeError resolver */
-  returnZero(){
-    return 0;
-  }
-
-  getAllCountries() {
-    this.service.getAllCountries().subscribe((data) => {
+    // carica tutti i paesi per poter filtrare quello corretto
+    this.service.getAllCountries().subscribe((data: Country[]) => {
       this.allCountries = data;
+      this.country = data.find((c) => c.cca3 === code)!;
+      if (this.country) this.processCountryData();
     });
   }
 
-  foundBorders(){
-    this.allCountries.find((country:any)=> {
-      this.borders.forEach(border => {
-        if(country.alpha3Code === border){
-          this.found.push(country.name);
-        }
-      })
-    })
+  processCountryData() {
+    // currencies
+    this.currencies = this.country.currencies
+      ? Object.entries(this.country.currencies)
+          .map(([code, cur]: [string, any]) => `${cur?.name || code} (${code})`)
+          .join(', ')
+      : 'N/A';
+
+    // languages
+    this.languages = this.country.languages
+      ? Object.values(this.country.languages)
+      : [];
+
+    // borders
+    this.borders = this.country.borders || [];
+
+    // nomi dei paesi confinanti
+    this.found = this.allCountries
+      .filter((c) => this.borders.includes(c.cca3))
+      .map((c) => c.name.common);
+
+    // native name
+    if (this.country.name.nativeName) {
+      const firstKey = Object.keys(this.country.name.nativeName)[0];
+      this.nativeName = this.country.name.nativeName[firstKey]?.official || '';
+    }
   }
 }

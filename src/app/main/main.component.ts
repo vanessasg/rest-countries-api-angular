@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { CountryService } from '../country.service';
 import { Country } from '../country';
 
@@ -28,7 +29,10 @@ export class MainComponent implements OnInit {
   showInfo: boolean = false;
   countryToSend: any;
 
-  constructor(private countryService: CountryService) {}
+  constructor(
+    private countryService: CountryService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.getAllCountries();
@@ -55,7 +59,7 @@ export class MainComponent implements OnInit {
             this.inputValue =
               this.inputValue.charAt(0).toUpperCase() +
               this.inputValue.slice(1);
-            return country.name.includes(this.inputValue);
+            return country.name.common.includes(this.inputValue);
           });
 
     this.regions.forEach((region) => {
@@ -71,19 +75,14 @@ export class MainComponent implements OnInit {
                 this.inputValue =
                   this.inputValue.charAt(0).toUpperCase() +
                   this.inputValue.slice(1);
-                return country.name.includes(this.inputValue);
+                return country.name.common.includes(this.inputValue);
               });
       }
     });
   }
 
-  sendCountry(name: string) {
-    this.countryService.getCountryInfo(name).subscribe((data) => {
-      this.countryToSend = data;
-      this.countryEvent.emit(this.countryToSend);
-    });
-  }
-  sendShowInfo() {
-    this.infoEvent.emit(this.showInfo);
+  sendCountry(country: any) {
+    // Naviga al dettaglio usando alpha3Code
+    this.router.navigate(['/countries', country.cca3]);
   }
 }

@@ -6,7 +6,7 @@
   padding-bottom: 50px;
 
   .back {
-    padding: 70px 0 90px 0;
+    padding: 70px 0 ;
 
     a {
       text-decoration: none;
@@ -49,10 +49,12 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
+    min-height: 50vh;
 
     .image {
       width: 560px;
       height: 420px;
+      flex:none;
 
       img {
         height: 100%;
@@ -197,4 +199,22 @@
       }
     }
   }
+}
+
+.debug {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  overflow-y: scroll;
+  color:green;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Courier New", Courier, monospace;
+}
+.debug-off {
+  display: none;
 }

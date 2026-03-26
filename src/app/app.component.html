@@ -3,8 +3,8 @@
     <app-header (themeEvent)='isDarkTheme($event)'></app-header>
   </div>
   <div class="main" [ngClass]='darkTheme === false ? "" : "dark-theme-main" '>
-    <app-main [darkTheme]='darkTheme' (countryEvent)='loadCountryInfo($event)' (infoEvent)='receiveShowInfo($event)'></app-main>
-    <app-country-info [showInfo]='showInfo' [clickedCountry]='countryInfo' [darkTheme]='darkTheme'></app-country-info>
+    <!-- <app-main [darkTheme]='darkTheme' (countryEvent)='loadCountryInfo($event)' (infoEvent)='receiveShowInfo($event)'></app-main> -->
+    <router-outlet></router-outlet>
   </div>
   <div class="footer" [ngClass]='darkTheme === false ? "" : "dark-theme-footer" '>
     <app-footer [darkTheme]='darkTheme'></app-footer>

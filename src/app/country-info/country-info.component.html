@@ -1,49 +1,38 @@
-<div class="container" *ngIf='showInfo'>
+<div class="container">
   <div class="back" [ngClass]='darkTheme===true?"dark-theme-back" : "" '>
-    <a href="/rest-countries-api-angular/main" >
+    <a routerLink='/'> >
       <button ><mat-icon>keyboard_backspace</mat-icon> Back</button>
     </a>
   </div>
 
   <div class="info">
-    <div *ngFor='let item of country |keyvalue : returnZero'>
-      <div class="image" *ngIf="item.key === 'flag'">
-        <img src="{{item.value}}" alt="">
-      </div>
+    <div class="debug-off">
+      {{country | json}} --- IGNORE ---
+    </div>
+    <div class="image">
+      <img src="{{country.flags.png}}" alt="{{country.name.common}} flag">
     </div>
     <div class="details">
-      <div class="name" *ngFor='let item of country |keyvalue : returnZero' [ngClass]='darkTheme===false?"" : "dark-theme-title" '>
-        <h1 *ngIf="item.key === 'name'">{{item.value}}</h1>
-      </div>
+      <h1>{{country.name.common}}</h1>
       <div class="info-section">
         <div class="info1">
-          <div class="native-name" *ngFor='let item of country |keyvalue : returnZero'>
-            <div *ngIf="item.key=== 'nativeName' ">Native Name: <span>{{item.value}}</span></div>
+          <div class="native-name">Native Name: <span>{{nativeName}}</span></div>
+          <div class="population">Population: <span>{{country.population | number:'.2' }}</span></div>
+          <div class="region">Region: <span>{{country.region}}</span></div>
+          <div class="sub-region">
+            Sub Region: <span>{{country.subregion}}</span>
           </div>
-          <div class="population" *ngFor='let item of country |keyvalue : returnZero'>
-            <div *ngIf="item.key=== 'population' ">Population: <span>{{ item.value |json|number:'.2' }}</span></div>
-          </div>
-          <div class="region" *ngFor='let item of country |keyvalue : returnZero'>
-            <div *ngIf="item.key=== 'region' ">Region: <span>{{item.value}}</span></div>
-          </div>
-
-          <div class="sub-region" *ngFor='let item of country |keyvalue : returnZero'>
-            <div *ngIf="item.key=== 'subregion' ">Sub Region: <span>{{item.value}}</span></div>
-          </div>
-          <div class="capital" *ngFor='let item of country |keyvalue : returnZero'>
-            <div *ngIf="item.key=== 'capital' ">Capital: <span>{{item.value}}</span></div>
+          <div class="capital">
+            Capital: <span>{{country.capital}}</span>
           </div>
 
         </div>
         <div class="info2">
-          <div class="domain" *ngFor='let item of country |keyvalue : returnZero'>
-            <div *ngIf="item.key=== 'topLevelDomain' ">Top Level Domain: <span>{{item.value}}</span></div>
+          <div class="currencies">
+            Currencies: <span>{{currencies}}</span>
           </div>
-          <div class="currencies" *ngFor='let item of country |keyvalue : returnZero'>
-            <div *ngIf='item.key === "currencies"'>Currencies: <span>{{currencies}}</span></div>
-          </div>
-          <div class="lang" *ngFor='let item of country |keyvalue : returnZero'>
-            <div *ngIf="item.key=== 'languages' ">Languages: <span>{{languages}}</span></div>
+          <div class="lang">
+            Languages: <span>{{languages.join(', ')}}</span>
           </div>
         </div>
       </div>

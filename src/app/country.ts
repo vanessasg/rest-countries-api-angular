@@ -1,14 +1,24 @@
 export class Country {
-  public name: string = '';
-  public flag: string = '';
-  public population: number = 0;
-  public region: string = '';
-  public capital: string = '';
-
-  public nativeName: string = '';
-  public subRegion: string = '';
-  public topLevelDomain: string = '';
-  public currencies: string = '';
-  public languages: string[] = [''];
-  public alpha3Code: string = '';
+  name: {
+    common: string;
+    official: string;
+    nativeName?: {
+      [key: string]: {
+        official: string;
+        common: string;
+      };
+    };
+  } = { common: '', official: '' };
+  officialName: string = '';
+  flags: { [key: string]: string } = {};
+  population: number = 0;
+  region: string = '';
+  subregion: string = '';
+  capital: string = '';
+  nativeName: { [key: string]: { official: string; common: string } } = {};
+  topLevelDomain: string = '';
+  currencies: { [code: string]: { name: string; symbol: string } } = {};
+  languages: { [key: string]: string } = {};
+  cca3: string = '';
+  borders: string[] = [];
 }

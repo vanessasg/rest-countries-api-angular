@@ -1,14 +1,14 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
 import { Country } from './country';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CountryService {
-  endpoint = 'https://restcountries.com/v2/name/';
+  endpoint = 'https://restcountries.com/v3.1/name/';
 
   constructor(private http: HttpClient) {}
 
@@ -24,11 +24,28 @@ export class CountryService {
 
   getAllCountries(): Observable<Country[]> {
     return this.http
-      .get<Country[]>('https://restcountries.com/v2/all')
-      .pipe(catchError(this.handleHerror), retry(3));
+      .get<
+        any[]
+      >('https://restcountries.com/v3.1/all?fields=name,flags,capital,currencies,languages,region,subregion,tld,cca3,population')
+      .pipe(
+        map((data) => data.map((d) => {
+          const country = new Country();
+          Object.assign(country, d);
+          return country;
+        })),
+        catchError(this.handleHerror),
+        retry(3),
+      );
   }
 
   getCountryInfo(name: string): Observable<Country> {
-    return this.http.get<Country>(this.endpoint + name);
+    return this.http.get<any[]>(this.endpoint + name).pipe(
+      map((data) => {
+        const country = new Country();
+        Object.assign(country, data[0]);
+        return country;
+      }),
+      catchError(this.handleHerror),
+    );
   }
 }
